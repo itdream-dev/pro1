@@ -15,7 +15,7 @@
       </div>
       <div class="col-sm-6" style="padding-right:25px;text-align:right;padding-top:15px">
         <p>Your Balance</p>
-        <p>1000 CMPCO</p>
+        <p>{{$balance}} CMPCO</p>
       </div>
     </div>
   </header>
@@ -34,7 +34,7 @@
 
   <div class="tab-content"  style="padding:10px 20px">
     <div id="all" class="tab-pane fade in active">
-      <div class="row" style="border:1px solid #ddd;padding:10px">
+      <!-- <div class="row" style="border:1px solid #ddd;padding:10px">
         <div class="col-sm-3">
           <h4>Received</h4>
           <p>2018-08-01 12:02:30</p>
@@ -49,13 +49,13 @@
         <div class="col-sm-3" style="text-align:right">
           <button id="btn-amount" class="btn btn-primary" style="width:150px; height:46px;background:#368e64; border-color:#368e64;color:white;" onclick="clickAmount()">1000 CMPCO</button>
         </div>
-      </div>
+      </div> -->
     </div>
     <div id="sent" class="tab-pane fade">
 
     </div>
     <div id="received" class="tab-pane fade">
-      <div class="row" style="border:1px solid #ddd;padding:10px">
+      <!-- <div class="row" style="border:1px solid #ddd;padding:10px">
         <div class="col-sm-3">
           <h4>Received</h4>
           <p>2018-08-01 12:02:30</p>
@@ -70,7 +70,7 @@
         <div class="col-sm-3" style="text-align:right">
           <button id="btn-amount" class="btn btn-primary" style="width:150px; height:46px;background:#368e64; border-color:#368e64;color:white;" onclick="clickAmount()">1000 CMPCO</button>
         </div>
-      </div>
+      </div> -->
     </div>
   </div>
 </div>
