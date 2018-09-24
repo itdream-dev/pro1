@@ -54,7 +54,7 @@
                             <label for="login" class="col-md-12 control-label" style="text-align:left"></label>
                             <div class="col-md-12">
                               <div class="checkbox-custom checkbox-default">
-            										<input id="term_check" name="term_check" type="checkbox"/>
+            										<input id="term_check" name="term_check" type="checkbox" required/>
             										<label for="term_check">I have read and agree to the Terms of Service</label>
             									</div>
                             </div>

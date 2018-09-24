@@ -288,7 +288,7 @@
             </div>
             <div class="col-sm-12">
 							<div class="input-group mb-md">
-													<input type="text" class="form-control" value="15ntDnqiBdRvEiVuDxPezstQtv8AC9Rxkw" disabled>
+													<input type="text" class="form-control" value="{{$wallet->address}}" disabled>
 													<span class="input-group-btn">
 														<button class="btn btn-success" type="button" onclick="">Copy</button>
 													</span>
@@ -358,7 +358,7 @@
 	//   $(this).addClass('active');
 	// });
 	function Send(){
-		
+
 	}
 	function receive_modal_go_main_screen(){
 		$('.receive_modal_qr_screen').hide();
