@@ -10,8 +10,8 @@
           <h2>Dashboard </h2>
         </div>
         <div class="row" style="">
-          <button class="btn btn-default" data-toggle="modal" data-target="#sendModal">Send</button>
-          <button class="btn btn-default" data-toggle="modal" data-target="#receiveModal">Request</button>
+          <button class="btn btn-default" id="btn_send" data-toggle="modal" data-target="#sendModal">Send</button>
+          <button class="btn btn-default" id="btn_request" data-toggle="modal" data-target="#receiveModal">Request</button>
         </div>
       </div>
       <div class="col-sm-6" style="padding-right:25px;text-align:right;padding-top:15px">
@@ -71,7 +71,6 @@
         </table>
       </div>
     </div>
-
   </div>
   </section>
   <script>
