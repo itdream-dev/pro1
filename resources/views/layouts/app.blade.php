@@ -268,9 +268,9 @@
               <label for="wallet_id" class="col-md-12 control-label" style="text-align:left">Copy & Share Address: <a href="#viewqrcode" style="color:#10ADE4;float:right" onclick="receive_modal_view_qr_screen();">View Qr Code</a></label>
               <div class="col-md-12">
 								<div class="input-group mb-md">
-														<input type="text" class="form-control" @if (isset($wallet)) value="{{$wallet->address}}" @else value="0" @endif disabled>
+														<input type="text" class="form-control" id="deposit-address" @if (isset($wallet)) value="{{$wallet->address}}" @else value="0" @endif disabled>
 														<span class="input-group-btn">
-															<button class="btn btn-success" type="button" onclick="">Copy</button>
+															<button class="btn btn-success" type="button" onclick="copyaddress()">Copy</button>
 														</span>
 								</div>
               </div>
@@ -357,6 +357,36 @@
 	//   $('.leftbar-menu').removeClass('active');
 	//   $(this).addClass('active');
 	// });
+
+	function copyaddress(){
+		var copyText = document.getElementById("deposit-address").value;
+		// console.log(copyText);
+		// const el = document.createElement('textarea');
+		// el.value = copyText;
+		// document.body.appendChild(el);
+		// el.select();
+		// document.execCommand('copy');
+		// document.body.removeChild(el);
+		// alert("Copied the address to clipboard: " + copyText);
+
+		var textarea = document.createElement('textarea');
+textarea.textContent = copyText;
+document.body.appendChild(textarea);
+
+var selection = document.getSelection();
+var range = document.createRange();
+//  range.selectNodeContents(textarea);
+range.selectNode(textarea);
+selection.removeAllRanges();
+selection.addRange(range);
+
+console.log('copy success', document.execCommand('copy'));
+selection.removeAllRanges();
+
+document.body.removeChild(textarea);
+alert("Copied the address to clipboard: " + copyText);
+	}
+
 	function Send(){
 
 	}
