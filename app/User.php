@@ -15,7 +15,7 @@ class User extends Authenticatable
      * @var array
      */
     protected $fillable = [
-        'name', 'email', 'password', 'is_enabled'
+        'name', 'email', 'password', 'is_enabled', 'mobile_number', 'post_code', 'country', 'state', 'city', 'address1', 'address2', 'is_student_or_alumni', 'school_id'
     ];
 
     /**
@@ -27,13 +27,8 @@ class User extends Authenticatable
         'password', 'remember_token',
     ];
 
-    public function wallets()
+    public function school()
     {
-      return $this->hasMany('App\Wallet');
-    }
-
-    public function sales()
-    {
-      return $this->hasMany('App\Sale');
+      return $this->belongsTo('App\School');
     }
 }

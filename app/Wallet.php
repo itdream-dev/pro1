@@ -11,7 +11,8 @@ namespace App;
  ******************************************************/
 
 use Illuminate\Database\Eloquent\Model;
-use App\Word;
+use App\User;
+use App\Coin;
 
 class Wallet extends Model
 {

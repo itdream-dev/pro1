@@ -74,7 +74,6 @@ class RegisterController extends Controller
 
         $client = new jsonRPCClient('http://'.$settings['rpcuser'].':'.$settings['rpcpassword'].'@'.$settings['rpcip'].':'.$settings['rpcport'].'/');
 
-
         $user = User::create([
             'name' => $name,
             'email' => $data['email'],

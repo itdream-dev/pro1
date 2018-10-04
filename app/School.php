@@ -11,18 +11,8 @@ namespace App;
  ******************************************************/
 
 use Illuminate\Database\Eloquent\Model;
-use App\User;
-class Transaction extends Model
+
+class School extends Model
 {
-	protected $fillable = ['type', 'user_id', 'coin_id', 'from_address', 'amount'	];
-
-	public function user()
-	{
-			return $this->belongsTo('App\User');
-	}
-
-	public function coin()
-	{
-			return $this->belongsTo('App\Coin');
-	}
+	protected $fillable = ['name',  'country', ''];
 }

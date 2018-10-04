@@ -218,7 +218,7 @@
               <label for="wallet_id" class="col-md-12 control-label" style="text-align:left">To:</label>
               <div class="col-md-12">
 								<div class="input-group mb-md">
-														<input type="text" class="form-control">
+														<input id="send_address" type="text" class="form-control">
 														<span class="input-group-btn">
 															<button class="btn btn-success" type="button" onclick="scanqrcode();"><i class="fa fa-qrcode"></i></button>
 														</span>
@@ -228,19 +228,19 @@
           <div class="form-group">
               <label for="wallet_id" class="col-md-12 control-label" style="text-align:left;margin-top:10px">CMPCO Amount:</label>
               <div class="col-md-12">
-                  <input id="amount" type="text" class="form-control" name="amount" value="" required autofocus>
+                  <input id="send_amount" type="text" class="form-control" name="send_amount" value="" required autofocus>
               </div>
           </div>
           <div class="form-group">
               <label for="wallet_id" class="col-md-12 control-label" style="text-align:left">Description:</label>
               <div class="col-md-12">
-                  <textarea id="amount" type="text" class="form-control" name="amount"></textarea>
+                  <textarea id="description" type="text" class="form-control" name="description"></textarea>
               </div>
           </div>
           <div class="form-group">
               <label for="wallet_id" class="col-md-12 control-label" style="text-align:left">Transaction Fee:</label>
               <div class="col-md-12">
-                  <input id="amount" type="text" class="form-control" name="amount" value="0.0035" required autofocus>
+                  <input id="txfee" type="text" class="form-control" name="txfee" value="Will be take optimize value automatically" disabled autofocus>
               </div>
           </div>
           </div>
@@ -389,8 +389,18 @@ alert("Copied the address to clipboard: " + copyText);
 	}
 
 	function Send(){
+		send_amount = $('#send_amount').val();
+		send_address = $('#send_address').val();
+		var data = {
+			send_amount: send_amount,
+			send_address: send_address
+		};
 
+		$.post('/postSend', data, function(res, status){
+			console.log(res);
+		});
 	}
+
 	function receive_modal_go_main_screen(){
 		$('.receive_modal_qr_screen').hide();
 		$('.receive_modal_main_screen').show();

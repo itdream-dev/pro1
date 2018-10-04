@@ -52,15 +52,19 @@ class HomeController extends Controller
         foreach ($addresses as $item) {
         foreach ($item as $address){
           if ( $address[0] == $wallet->address){
-            $balance = $address[1];
+            foreach ($item as $address1){
+              $balance = $balance + $address1[1];
+            }
+            break;
           }
         }
         }
-
+        $estimatefee = $client->estimatefee(5);
         return view('home', [
           'home' => 'Dashboard',
           'balance' => $balance,
-          'wallet' => $wallet
+          'wallet' => $wallet,
+          'estimatefee' => $estimatefee
         ]);
     }
 }

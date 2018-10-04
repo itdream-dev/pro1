@@ -11,7 +11,6 @@ namespace App;
  ******************************************************/
 
 use Illuminate\Database\Eloquent\Model;
-use App\Word;
 
 class Generalsetting extends Model
 {
