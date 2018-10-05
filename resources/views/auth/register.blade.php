@@ -293,6 +293,7 @@ $(document).ready(function(){
   });
 } else {
   $("#suggesstion-box").html("");
+  $("#search-box").css("background","#FFF");
 }
 
   // $("#search-box").css("background","#FFF url(LoaderIcon.gif) no-repeat 455px");
