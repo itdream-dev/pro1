@@ -40,7 +40,7 @@ class SchoolController extends Controller
     {
         $query = $request->input('query');
         if ($query == "") return '';
-        $schools = School::where('name', 'like', '%'.$query.'%')->get();
+        $schools = School::where('name', 'like', '%'.$query.'%')->limit(20)->get();
         $res = '';
         if(!empty($schools)) {
         $res = '<ul id="country-list">';
