@@ -2,21 +2,23 @@
 @section('content')
 <style>
 @media only screen and (max-width: 1500px) {
-  .content {
-    padding-top:120px !important;
-  }
 
-  #suggesstion-box ul{
-    list-style:none;
-    padding-left:0px;
-  }
+}
 
-  #suggesstion-box li {
-    padding-left: 20px;
-    border-bottom:1px solid #368e64;
-    /* border-right:1px solid #368e64;
-    border-left:1px solid #368e64; */
-  }
+.content {
+  padding-top:120px !important;
+}
+
+#country-list {
+  list-style:none;
+  padding-left:0px;
+}
+
+#country-list li {
+  padding-left: 20px;
+  border-bottom:1px solid #368e64;
+  /* border-right:1px solid #368e64;
+  border-left:1px solid #368e64; */
 }
 </style>
 <div id="step1" class="step content container" style="padding-top:300px">
@@ -273,7 +275,7 @@ $(document).ready(function(){
         $("#suggesstion-box").html(data);
         //$("#suggesstion-box").append(append_data);
         $("#suggesstion-box").show();
-      //   $("#search-box").css("background","#FFF");
+        $("#search-box").css("background","#FFF");
       // });
 
 		}
