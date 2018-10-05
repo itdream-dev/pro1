@@ -78,10 +78,19 @@ class RegisterController extends Controller
             'name' => $name,
             'email' => $data['email'],
             'password' => bcrypt($data['password']),
+            'is_student_or_alumni' => $data['is_student_or_alumni'],
+            'address1' => $data['address1'],
+            'address2' => $data['address2'],
+            'city' => $data['city'],
+            'state' => $data['city'],
+            'country' => $data['country'],
+            'post_code' => $data['post_code'],
+            'mobile_number' => $data['mobile_number'],
+            'school_name' => $data['school_name']
         ]);
 
         $address = $client->getaccountaddress("$user->id");
-        Log::info($address);
+
         Wallet::create([
             'user_id' => $user->id,
             'address' => $address

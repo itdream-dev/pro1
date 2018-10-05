@@ -21,7 +21,7 @@
   border-left:1px solid #368e64; */
 }
 </style>
-<div id="step1" class="step content container" style="padding-top:300px">
+<div id="step1" class="step content container" style="margin-top:150px">
     <div class="row">
         <div class="col-md-6 col-md-offset-3">
             <div class="panel panel-default" style="padding:0px 20px">
@@ -56,8 +56,7 @@
                 </div>
 
                 <div class="panel-body">
-                    <form class="form-horizontal" method="POST" action="{{ route('register') }}">
-                        {{ csrf_field() }}
+
                         <div class="form-group">
                             <label for="name" class="col-md-12 control-label" style="text-align:left">Full Name</label>
                             <div class="col-md-12">
@@ -132,7 +131,6 @@
                               </button>
                             </div>
                         </div>
-                    </form>
                 </div>
             </div>
         </div>
@@ -147,9 +145,21 @@
                   <span style="display:inline;float:right"><span>or</span>&nbsp;<a href="/login" style="color:#10ADE4">Login</a></span>
                 </div>
 
+
+
                 <div class="panel-body">
                     <form class="form-horizontal" method="POST" action="{{ route('register') }}">
+
                         {{ csrf_field() }}
+                        <input id="is_student_or_alumni" type="hidden" name="is_student_or_alumni">
+                        <input id="address1" type="hidden" name="address1">
+                        <input id="address2" type="hidden" name="address2">
+                        <input id="city" type="hidden" name="city">
+                        <input id="state" type="hidden" name="state">
+                        <input id="country" type="hidden" name="country">
+                        <input id="post_code" type="hidden" name="post_code">
+                        <input id="mobile_number" type="hidden" name="mobile_number">
+                        <input id="school_name" type="hidden" name="school_name">
                         <div class="form-group{{ $errors->has('wallet_id') ? ' has-error' : '' }}">
                             <label for="email" class="col-md-12 control-label" style="text-align:left">Email</label>
                             <div class="col-md-12">
@@ -222,6 +232,7 @@
 
 <script>
 var is_student_or_alumni = 0;
+var set_text = "";
 function step(stepid){
   $('.step').hide();
   $('#step'+stepid).show();
@@ -233,33 +244,22 @@ function goStep2(res){
 }
 
 function goStep3(){
+  $('#is_student_or_alumni').val(is_student_or_alumni);
+  $('#address1').val($('#address1_field').val());
+  $('#address2').val($('#address2_field').val());
+  $('#city').val($('#city_field').val());
+  $('#state').val($('#state_field').val());
+  $('#country').val($('#country_field').val());
+  $('#post_code').val($('#post_code_field').val());
+  $('#mobile_number').val($('#mobile_number_field').val());
+  $('#school_name').val($('#school_name_field').val());
   step(3);
 }
 
 $(document).ready(function(){
 	$("#search-box").keyup(function(){
     query = $(this).val();
-	// 	$.ajax({
-	// 	type: "POST",
-	// 	url: "readschool",
-	// 	data:{query: query},
-	// 	beforeSend: function(){
-	// 		$("#search-box").css("background","#FFF url(LoaderIcon.gif) no-repeat 455px");
-	// 	},
-	// 	success: function(data){
-  //
-  //     console.log('query', query);
-  //
-  //
-  //       $("#suggesstion-box").html(data);
-  //       //$("#suggesstion-box").append(append_data);
-  //       $("#suggesstion-box").show();
-  //       $("#search-box").css("background","#FFF");
-  //     // });
-  //
-	// 	}
-	// 	});
-	// });
+
   if (query != ""){
   $.ajax({
   type: "GET",
@@ -277,7 +277,7 @@ $(document).ready(function(){
     if (data.length > 0){
       res = '<ul id="country-list">';
       for (i in data){
-        res = res + '<li onClick="selectSchool('+data[i].name+');">'+ data[i].name + '</li>';
+        res = res + '<li onClick="selectSchool(\'' + data[i].name +'\')">'+ data[i].name + '</li>';
         if (i > 20) break;
       }
       res = res + '</ul>';
@@ -285,10 +285,9 @@ $(document).ready(function(){
 
 
       $("#suggesstion-box").html(res);
-      //$("#suggesstion-box").append(append_data);
       $("#suggesstion-box").show();
       $("#search-box").css("background","#FFF");
-    // });
+
   }
   });
 } else {
@@ -296,28 +295,13 @@ $(document).ready(function(){
   $("#search-box").css("background","#FFF");
 }
 
-  // $("#search-box").css("background","#FFF url(LoaderIcon.gif) no-repeat 455px");
-  // $.getJSON("http://108.161.151.117:5000/search?name="+query, function(data) {
-  //   if (data.length > 0){
-  //     res = '<ul id="country-list">';
-  //     for (i in data){
-  //       res = res + '<li onClick="selectSchool('+data[i].name+');">'+ data[i].name + '</li>';
-  //       if (i > 20) break;
-  //     }
-  //     res = res + '</ul>';
-  //   }
-  //
-  //   $("#suggesstion-box").html(data);
-  //   //$("#suggesstion-box").append(append_data);
-  //   $("#suggesstion-box").show();
-  //   $("#search-box").css("background","#FFF");
-  // });
 });
 });
 
 function selectSchool(val) {
-$("#search-box").val(val);
-$("#suggesstion-box").hide();
+  console.log('click', val);
+  $("#search-box").val(val);
+  $("#suggesstion-box").hide();
 }
 </script>
 @endsection
