@@ -74,10 +74,10 @@
                             </div>
                         </div>
 
-                        <div class="form-group">
-                            <label for="address1" class="col-md-12 control-label" style="text-align:left">Street Address Line1</label>
+                        <div class="form-group"  style="">
+                            <label for="address1" class="col-md-12 control-label" style="text-align:left;margin-top:20px">Street Address Line1</label>
                             <div class="col-md-12">
-                                <input id="address1_field" type="text" class="form-control"  required>
+                                <input id="address1_field" type="text" class="form-control" required>
                             </div>
                         </div>
 
@@ -258,8 +258,12 @@ function goStep3(){
 
 $(document).ready(function(){
 	$("#search-box").keyup(function(){
-    query = $(this).val();
-
+  query = $(this).val();
+  console.log(query);
+  if (set_text == query) {
+    set_text = "";
+    return;
+  }
   if (query != ""){
   $.ajax({
   type: "GET",
@@ -267,10 +271,9 @@ $(document).ready(function(){
   data:{name: query},
   crossDomain: true,
   beforeSend: function(){
-    $("#search-box").css("background","#FFF url(LoaderIcon.gif) no-repeat 455px");
+    $("#search-box").css("background","#FFF url(LoaderIcon.gif) no-repeat 410px");
   },
   success: function(data){
-
     console.log('query', query);
     data = JSON.parse(data);
     console.log('data', data[0]);
@@ -282,12 +285,9 @@ $(document).ready(function(){
       }
       res = res + '</ul>';
     }
-
-
-      $("#suggesstion-box").html(res);
-      $("#suggesstion-box").show();
-      $("#search-box").css("background","#FFF");
-
+    $("#suggesstion-box").html(res);
+    $("#suggesstion-box").show();
+    $("#search-box").css("background","#FFF");
   }
   });
 } else {
@@ -300,6 +300,7 @@ $(document).ready(function(){
 
 function selectSchool(val) {
   console.log('click', val);
+  set_text = val;
   $("#search-box").val(val);
   $("#suggesstion-box").hide();
 }
