@@ -239,48 +239,79 @@ function goStep3(){
 $(document).ready(function(){
 	$("#search-box").keyup(function(){
     query = $(this).val();
-		$.ajax({
-		type: "POST",
-		url: "readschool",
-		data:{query: query},
-		beforeSend: function(){
-			$("#search-box").css("background","#FFF url(LoaderIcon.gif) no-repeat 455px");
-		},
-		success: function(data){
+	// 	$.ajax({
+	// 	type: "POST",
+	// 	url: "readschool",
+	// 	data:{query: query},
+	// 	beforeSend: function(){
+	// 		$("#search-box").css("background","#FFF url(LoaderIcon.gif) no-repeat 455px");
+	// 	},
+	// 	success: function(data){
+  //
+  //     console.log('query', query);
+  //
+  //
+  //       $("#suggesstion-box").html(data);
+  //       //$("#suggesstion-box").append(append_data);
+  //       $("#suggesstion-box").show();
+  //       $("#search-box").css("background","#FFF");
+  //     // });
+  //
+	// 	}
+	// 	});
+	// });
+  if (query != ""){
+  $.ajax({
+  type: "GET",
+  url: "http://108.161.151.117:5000/search",
+  data:{name: query},
+  crossDomain: true,
+  beforeSend: function(){
+    $("#search-box").css("background","#FFF url(LoaderIcon.gif) no-repeat 455px");
+  },
+  success: function(data){
 
-      console.log('query', query);
+    console.log('query', query);
+    data = JSON.parse(data);
+    console.log('data', data[0]);
+    if (data.length > 0){
+      res = '<ul id="country-list">';
+      for (i in data){
+        res = res + '<li onClick="selectSchool('+data[i].name+');">'+ data[i].name + '</li>';
+        if (i > 20) break;
+      }
+      res = res + '</ul>';
+    }
 
-			//$("#suggesstion-box").html(data);
-      // $.ajax({
-      //   type: "GET",
-      //   url: 'http://universities.hipolabs.com/search?name='+query,
-      //   success: function (data1){
-      //     append_data = '';
-      //     for (i in data1){
-      //       append_data = append_data + '<li onClick="selectSchool(' + data1[i]['name'] + ');">' + data1[i]['name'] + '</li>';
-      //     }
-      //     console.log(data1);
-      //     $("#suggesstion-box").html(data);
-      //     $("#suggesstion-box").append(append_data);
-      //     $("#suggesstion-box").show();
-      //     $("#search-box").css("background","#FFF");
-      //   }
-      // });
-      // $.get('http://universities.hipolabs.com/search?name='+$(this).val(), function(data1, status){
-      //   append_data = '';
-      //   for (i in data1){
-      //     append_data = append_data + '<li onClick="selectSchool('+ data1[i]['name']+');">' + data1[i]['name'] + '</li>';
-      //   }
-      //   console.log(data1);
-        $("#suggesstion-box").html(data);
-        //$("#suggesstion-box").append(append_data);
-        $("#suggesstion-box").show();
-        $("#search-box").css("background","#FFF");
-      // });
 
-		}
-		});
-	});
+      $("#suggesstion-box").html(res);
+      //$("#suggesstion-box").append(append_data);
+      $("#suggesstion-box").show();
+      $("#search-box").css("background","#FFF");
+    // });
+  }
+  });
+} else {
+  $("#suggesstion-box").html("");
+}
+
+  // $("#search-box").css("background","#FFF url(LoaderIcon.gif) no-repeat 455px");
+  // $.getJSON("http://108.161.151.117:5000/search?name="+query, function(data) {
+  //   if (data.length > 0){
+  //     res = '<ul id="country-list">';
+  //     for (i in data){
+  //       res = res + '<li onClick="selectSchool('+data[i].name+');">'+ data[i].name + '</li>';
+  //       if (i > 20) break;
+  //     }
+  //     res = res + '</ul>';
+  //   }
+  //
+  //   $("#suggesstion-box").html(data);
+  //   //$("#suggesstion-box").append(append_data);
+  //   $("#suggesstion-box").show();
+  //   $("#search-box").css("background","#FFF");
+  // });
+});
 });
 
 function selectSchool(val) {
