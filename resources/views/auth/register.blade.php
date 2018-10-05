@@ -249,30 +249,30 @@ $(document).ready(function(){
       console.log('query', query);
 
 			//$("#suggesstion-box").html(data);
-      $.ajax({
-        type: "GET",
-        url: 'http://universities.hipolabs.com/search?name='+query,
-        success: function (data1){
-          append_data = '';
-          for (i in data1){
-            append_data = append_data + '<li onClick="selectSchool(' + data1[i]['name'] + ');">' + data1[i]['name'] + '</li>';
-          }
-          console.log(data1);
-          $("#suggesstion-box").html(data);
-          $("#suggesstion-box").append(append_data);
-          $("#suggesstion-box").show();
-          $("#search-box").css("background","#FFF");
-        }
-      });
+      // $.ajax({
+      //   type: "GET",
+      //   url: 'http://universities.hipolabs.com/search?name='+query,
+      //   success: function (data1){
+      //     append_data = '';
+      //     for (i in data1){
+      //       append_data = append_data + '<li onClick="selectSchool(' + data1[i]['name'] + ');">' + data1[i]['name'] + '</li>';
+      //     }
+      //     console.log(data1);
+      //     $("#suggesstion-box").html(data);
+      //     $("#suggesstion-box").append(append_data);
+      //     $("#suggesstion-box").show();
+      //     $("#search-box").css("background","#FFF");
+      //   }
+      // });
       // $.get('http://universities.hipolabs.com/search?name='+$(this).val(), function(data1, status){
       //   append_data = '';
       //   for (i in data1){
       //     append_data = append_data + '<li onClick="selectSchool('+ data1[i]['name']+');">' + data1[i]['name'] + '</li>';
       //   }
       //   console.log(data1);
-      //   $("#suggesstion-box").html(data);
-      //   $("#suggesstion-box").append(append_data);
-      //   $("#suggesstion-box").show();
+        $("#suggesstion-box").html(data);
+        //$("#suggesstion-box").append(append_data);
+        $("#suggesstion-box").show();
       //   $("#search-box").css("background","#FFF");
       // });
 
