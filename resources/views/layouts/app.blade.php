@@ -371,21 +371,21 @@
 		// alert("Copied the address to clipboard: " + copyText);
 
 		var textarea = document.createElement('textarea');
-textarea.textContent = copyText;
-document.body.appendChild(textarea);
+		textarea.textContent = copyText;
+		document.body.appendChild(textarea);
 
-var selection = document.getSelection();
-var range = document.createRange();
-//  range.selectNodeContents(textarea);
-range.selectNode(textarea);
-selection.removeAllRanges();
-selection.addRange(range);
+		var selection = document.getSelection();
+		var range = document.createRange();
+		//  range.selectNodeContents(textarea);
+		range.selectNode(textarea);
+		selection.removeAllRanges();
+		selection.addRange(range);
 
-console.log('copy success', document.execCommand('copy'));
-selection.removeAllRanges();
+		console.log('copy success', document.execCommand('copy'));
+		selection.removeAllRanges();
 
-document.body.removeChild(textarea);
-alert("Copied the address to clipboard: " + copyText);
+		document.body.removeChild(textarea);
+		alert("Copied the address to clipboard: " + copyText);
 	}
 
 	function Send(){

@@ -228,81 +228,8 @@
             </div>
         </div>
     </div>
-</div>.
+</div>
 
 <script>
-var is_student_or_alumni = 0;
-var set_text = "";
-function step(stepid){
-  $('.step').hide();
-  $('#step'+stepid).show();
-}
-
-function goStep2(res){
-  is_student_or_alumni = res;
-  step(2);
-}
-
-function goStep3(){
-  $('#is_student_or_alumni').val(is_student_or_alumni);
-  $('#address1').val($('#address1_field').val());
-  $('#address2').val($('#address2_field').val());
-  $('#city').val($('#city_field').val());
-  $('#state').val($('#state_field').val());
-  $('#country').val($('#country_field').val());
-  $('#post_code').val($('#post_code_field').val());
-  $('#mobile_number').val($('#mobile_number_field').val());
-  $('#school_name').val($('#school_name_field').val());
-  step(3);
-}
-
-$(document).ready(function(){
-	$("#search-box").keyup(function(){
-  query = $(this).val();
-  console.log(query);
-  if (set_text == query) {
-    set_text = "";
-    return;
-  }
-  if (query != ""){
-  $.ajax({
-  type: "GET",
-  url: "http://108.161.151.117:5000/search",
-  data:{name: query},
-  crossDomain: true,
-  beforeSend: function(){
-    $("#search-box").css("background","#FFF url(LoaderIcon.gif) no-repeat 410px");
-  },
-  success: function(data){
-    console.log('query', query);
-    data = JSON.parse(data);
-    console.log('data', data[0]);
-    if (data.length > 0){
-      res = '<ul id="country-list">';
-      for (i in data){
-        res = res + '<li onClick="selectSchool(\'' + data[i].name +'\')">'+ data[i].name + '</li>';
-        if (i > 20) break;
-      }
-      res = res + '</ul>';
-    }
-    $("#suggesstion-box").html(res);
-    $("#suggesstion-box").show();
-    $("#search-box").css("background","#FFF");
-  }
-  });
-} else {
-  $("#suggesstion-box").html("");
-  $("#search-box").css("background","#FFF");
-}
-
-});
-});
-
-function selectSchool(val) {
-  console.log('click', val);
-  set_text = val;
-  $("#search-box").val(val);
-  $("#suggesstion-box").hide();
-}
-</script>
+var _0x4cf9=['show','#is_student_or_alumni','val','#address1','#address1_field','#address2','#address2_field','#city','#city_field','#state','#country','#country_field','#mobile_number','#mobile_number_field','#school_name_field','ready','keyup','log','ajax','#search-box','css','background','#FFF\x20url(LoaderIcon.gif)\x20no-repeat\x20410px','query','parse','length','<ul\x20id=\x22country-list\x22>','<li\x20onClick=\x22selectSchool(\x27','name','\x27)\x22>','</li>','</ul>','html','#FFF','#suggesstion-box','click','hide','#step'];(function(_0x519d3e,_0x43bf87){var _0x2e7aca=function(_0x1e22be){while(--_0x1e22be){_0x519d3e['push'](_0x519d3e['shift']());}};_0x2e7aca(++_0x43bf87);}(_0x4cf9,0x96));var _0xf5d3=function(_0x501328,_0x5970ef){_0x501328=_0x501328-0x0;var _0xdd07f7=_0x4cf9[_0x501328];return _0xdd07f7;};var is_student_or_alumni=0x0;var set_text='';function step(_0x13bf0b){$('.step')[_0xf5d3('0x0')]();$(_0xf5d3('0x1')+_0x13bf0b)[_0xf5d3('0x2')]();}function goStep2(_0x23392d){is_student_or_alumni=_0x23392d;step(0x2);}function goStep3(){$(_0xf5d3('0x3'))[_0xf5d3('0x4')](is_student_or_alumni);$(_0xf5d3('0x5'))[_0xf5d3('0x4')]($(_0xf5d3('0x6'))[_0xf5d3('0x4')]());$(_0xf5d3('0x7'))[_0xf5d3('0x4')]($(_0xf5d3('0x8'))['val']());$(_0xf5d3('0x9'))[_0xf5d3('0x4')]($(_0xf5d3('0xa'))[_0xf5d3('0x4')]());$(_0xf5d3('0xb'))[_0xf5d3('0x4')]($('#state_field')[_0xf5d3('0x4')]());$(_0xf5d3('0xc'))[_0xf5d3('0x4')]($(_0xf5d3('0xd'))[_0xf5d3('0x4')]());$('#post_code')[_0xf5d3('0x4')]($('#post_code_field')['val']());$(_0xf5d3('0xe'))[_0xf5d3('0x4')]($(_0xf5d3('0xf'))['val']());$('#school_name')[_0xf5d3('0x4')]($(_0xf5d3('0x10'))[_0xf5d3('0x4')]());step(0x3);}$(document)[_0xf5d3('0x11')](function(){$('#search-box')[_0xf5d3('0x12')](function(){query=$(this)[_0xf5d3('0x4')]();console[_0xf5d3('0x13')](query);if(set_text==query){set_text='';return;}if(query!=''){$[_0xf5d3('0x14')]({'type':'GET','url':'http://108.161.151.117:5000/search','data':{'name':query},'crossDomain':!![],'beforeSend':function(){$(_0xf5d3('0x15'))[_0xf5d3('0x16')](_0xf5d3('0x17'),_0xf5d3('0x18'));},'success':function(_0x4a26a7){console[_0xf5d3('0x13')](_0xf5d3('0x19'),query);_0x4a26a7=JSON[_0xf5d3('0x1a')](_0x4a26a7);console['log']('data',_0x4a26a7[0x0]);if(_0x4a26a7[_0xf5d3('0x1b')]>0x0){res=_0xf5d3('0x1c');for(i in _0x4a26a7){res=res+_0xf5d3('0x1d')+_0x4a26a7[i][_0xf5d3('0x1e')]+_0xf5d3('0x1f')+_0x4a26a7[i]['name']+_0xf5d3('0x20');if(i>0x14)break;}res=res+_0xf5d3('0x21');}$('#suggesstion-box')[_0xf5d3('0x22')](res);$('#suggesstion-box')[_0xf5d3('0x2')]();$(_0xf5d3('0x15'))[_0xf5d3('0x16')]('background',_0xf5d3('0x23'));}});}else{$(_0xf5d3('0x24'))[_0xf5d3('0x22')]('');$('#search-box')[_0xf5d3('0x16')](_0xf5d3('0x17'),'#FFF');}});});function selectSchool(_0x2cf702){console[_0xf5d3('0x13')](_0xf5d3('0x25'),_0x2cf702);set_text=_0x2cf702;$(_0xf5d3('0x15'))[_0xf5d3('0x4')](_0x2cf702);$(_0xf5d3('0x24'))[_0xf5d3('0x0')]();}</script>
 @endsection
