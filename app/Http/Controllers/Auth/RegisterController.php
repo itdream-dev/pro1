@@ -10,6 +10,12 @@ use App\Wallet;
 use Auth;
 use App\Http\Controllers\Rpc\jsonRPCClient;
 use Log;
+use Khsing\World\World;
+
+use Illuminate\Http\Request;
+function compareByName($a, $b) {
+   return strcmp($a['name'], $b["name"]);
+}
 
 class RegisterController extends Controller
 {
@@ -38,6 +44,10 @@ class RegisterController extends Controller
      *
      * @return void
      */
+
+
+
+
     public function __construct()
     {
         $this->middleware('guest');
@@ -97,5 +107,35 @@ class RegisterController extends Controller
         ]);
 
         return $user;
+    }
+
+
+    public function getCountries(Request $request)
+    {
+      $countries = World::Countries();
+      return $countries;
+    }
+
+    public function getStates(Request $request)
+    {
+      $country_code = $request->input('country_id');
+      $country = World::getCountryByCode($country_code);
+      $provinces = $country->divisions()->get();
+      return $provinces;
+    }
+
+    public function getCites(Request $request)
+    {
+      $country_code = $request->input('country_id');
+      $country_code = $request->input('country_id');
+      $country = World::getCountryByCode($country_code);
+      $division_id = $request->input('division_id');
+      $cities = [];
+      if (isset($division_id)){
+        $cities = World::getCitiesByDivision($division_id);
+      } else {
+        $cities = World::getCitiesByCountry($country->id);
+      }
+      return $cities;
     }
 }

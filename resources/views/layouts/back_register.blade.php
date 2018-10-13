@@ -23,6 +23,7 @@
   <!--Vendor-JS-->
   <script src="/assets_index/js/vendor/jquery-1.12.4.min.js"></script>
   <script src="/assets_index/js/vendor/bootstrap.min.js"></script>
+  <script src="https://ajax.aspnetcdn.com/ajax/jquery.validate/1.13.0/jquery.validate.js"></script>
 
 
 </head>
@@ -115,8 +116,8 @@
     </div>
   </div>
   @yield('content')
-
   <script src="/assets_index/js/main.js"></script>
+  <script src="https://ajax.aspnetcdn.com/ajax/jquery.validate/1.13.0/jquery.validate.js"></script>
   <script>
     $('.dropdown-menu li a').click(function(){
       id = $(this).attr('id');

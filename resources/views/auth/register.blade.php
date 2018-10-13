@@ -1,5 +1,6 @@
 @extends('layouts.back_register')
 @section('content')
+
 <style>
 @media only screen and (max-width: 1500px) {
 
@@ -21,6 +22,44 @@
   border-left:1px solid #368e64; */
 }
 </style>
+@if ($errors->has('email') || $errors->has('password'))
+<div id="step0" class="step content container" style="margin-top:150px">
+  <div class="row">
+      <div class="col-md-6 col-md-offset-3">
+          <div class="panel panel-default" style="padding:0px 20px">
+              <div class="panel-body" style="padding-top:30px">
+                      <div class="form-group">
+                          <label for="login" class="col-md-12 control-label" style="text-align:center;font-size:20px;font-weight:400;margin-bottom:10px">Sign up Failed! </label>
+                          @if ($errors->has('email'))
+                              <span class="help-block" style="text-align:center">
+                                  <strong>{{ $errors->first('email') }}</strong>
+                              </span>
+                          @endif
+                          @if ($errors->has('password'))
+                              <span class="help-block">
+                                  <strong>{{ $errors->first('password') }}</strong>
+                              </span>
+                          @endif
+                          <div class="row" style="padding-top:30px">
+                          <div class="col-md-6" style="text-align:right;padding-right:10px">
+                            <button class="btn btn-primary" style="width:150px; background:#368e64; border-color:#368e64; height:40px" onclick="retry(1)">
+                                Retry
+                            </button>
+                          </div>
+                          <div class="col-md-6" style="text-align:left;padding-left:10px">
+                            <button class="btn btn-primary" style="width:150px;background:#368e64; border-color:#368e64; height:40px" onclick="retry(0)">
+                                Cancel
+                            </button>
+                          </div>
+                          </div>
+                      </div>
+              </div>
+          </div>
+      </div>
+  </div>
+</div>
+@endif
+@if (!$errors->has('email') && !$errors->has('password'))
 <div id="step1" class="step content container" style="margin-top:150px">
     <div class="row">
         <div class="col-md-6 col-md-offset-3">
@@ -35,7 +74,7 @@
                               </button>
                             </div>
                             <div class="col-md-6" style="text-align:left;padding-left:10px">
-                              <button class="btn btn-primary" style="width:150px;background:#368e64; border-color:#368e64; height:40px" onclick="goStep2(3)">
+                              <button class="btn btn-primary" style="width:150px;background:#368e64; border-color:#368e64; height:40px" onclick="goStep2(0)">
                                   No
                               </button>
                             </div>
@@ -46,6 +85,7 @@
         </div>
     </div>
 </div>
+@endif
 <div id="step2" class="step content container" style="padding-top:100px; display:none">
     <div class="row">
         <div class="col-md-6 col-md-offset-3">
@@ -56,7 +96,7 @@
                 </div>
 
                 <div class="panel-body">
-
+                    <form id="form_step_2">
                         <div class="form-group">
                             <label for="name" class="col-md-12 control-label" style="text-align:left">Full Name</label>
                             <div class="col-md-12">
@@ -74,6 +114,34 @@
                             </div>
                         </div>
 
+
+                        <div class="form-group">
+                            <label for="country" class="col-md-12 control-label" style="text-align:left;margin-top:20px">Country</label>
+                            <div class="col-md-12">
+                                <select id="countries" onchange="selectCountry(this.value)">
+
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="state" class="col-md-12 control-label" style="text-align:left;margin-top:20px">State/Province</label>
+                            <div class="col-md-12">
+                              <select id="states" onchange="selectState(this.value)">
+
+                              </select>
+                            </div>
+                        </div>
+
+
+                        <div class="form-group">
+                            <label for="city" class="col-md-12 control-label" style="text-align:left;margin-top:20px">City</label>
+                            <div class="col-md-12">
+                              <select id="cites">
+                              </select>
+                            </div>
+                        </div>
+
                         <div class="form-group"  style="">
                             <label for="address1" class="col-md-12 control-label" style="text-align:left;margin-top:20px">Street Address Line1</label>
                             <div class="col-md-12">
@@ -85,27 +153,6 @@
                             <label for="address2" class="col-md-12 control-label" style="text-align:left">Street Address Line2</label>
                             <div class="col-md-12">
                                 <input id="address2_field" type="text" class="form-control" required>
-                            </div>
-                        </div>
-
-                        <div class="form-group">
-                            <label for="city" class="col-md-12 control-label" style="text-align:left">City</label>
-                            <div class="col-md-12">
-                                <input id="city_field" type="text" class="form-control" required>
-                            </div>
-                        </div>
-
-                        <div class="form-group">
-                            <label for="state" class="col-md-12 control-label" style="text-align:left">State/Province</label>
-                            <div class="col-md-12">
-                                <input id="state_field" type="text" class="form-control" required>
-                            </div>
-                        </div>
-
-                        <div class="form-group">
-                            <label for="country" class="col-md-12 control-label" style="text-align:left">Country</label>
-                            <div class="col-md-12">
-                                <input id="country_field" type="text" class="form-control" required>
                             </div>
                         </div>
 
@@ -126,11 +173,12 @@
                         <div class="form-group">
                             <label for="login" class="col-md-12 control-label" style="text-align:left"></label>
                             <div class="col-md-12">
-                              <button class="btn btn-primary" style="width:100%; background:#368e64; border-color:#368e64; height:40px" onclick="goStep3()">
+                              <button class="btn btn-primary" type="submit" style="width:100%; background:#368e64; border-color:#368e64; height:40px">
                                   Continue
                               </button>
                             </div>
                         </div>
+                    </form>
                 </div>
             </div>
         </div>
@@ -195,11 +243,11 @@
                             <label for="password" class="col-md-12 control-label" style="text-align:left; color:#368e64">Are you 13 years old or older?</label>
                             <div class="col-md-12">
                               <div class="form-check form-check-inline" style="display:inline">
-                                  <input class="form-check-input" type="radio" id="inlineCheckbox1" value="option1">
+                                  <input class="form-check-input" type="radio" id="inlineCheckbox1" name="is_more_than_13_years" value="1" checked>
                                   <label class="form-check-label" for="inlineCheckbox1">Yes</label>
                               </div>
                               <div class="form-check form-check-inline" style="display:inline; margin-left:20px">
-                                <input class="form-check-input" type="radio" id="inlineCheckbox2" value="option2">
+                                <input class="form-check-input" type="radio" id="inlineCheckbox2" name="is_more_than_13_years" value="0">
                                 <label class="form-check-label" for="inlineCheckbox2">No</label>
                               </div>
                             </div>
@@ -228,8 +276,214 @@
             </div>
         </div>
     </div>
-</div>
+</div>.
 
 <script>
-var _0x4cf9=['show','#is_student_or_alumni','val','#address1','#address1_field','#address2','#address2_field','#city','#city_field','#state','#country','#country_field','#mobile_number','#mobile_number_field','#school_name_field','ready','keyup','log','ajax','#search-box','css','background','#FFF\x20url(LoaderIcon.gif)\x20no-repeat\x20410px','query','parse','length','<ul\x20id=\x22country-list\x22>','<li\x20onClick=\x22selectSchool(\x27','name','\x27)\x22>','</li>','</ul>','html','#FFF','#suggesstion-box','click','hide','#step'];(function(_0x519d3e,_0x43bf87){var _0x2e7aca=function(_0x1e22be){while(--_0x1e22be){_0x519d3e['push'](_0x519d3e['shift']());}};_0x2e7aca(++_0x43bf87);}(_0x4cf9,0x96));var _0xf5d3=function(_0x501328,_0x5970ef){_0x501328=_0x501328-0x0;var _0xdd07f7=_0x4cf9[_0x501328];return _0xdd07f7;};var is_student_or_alumni=0x0;var set_text='';function step(_0x13bf0b){$('.step')[_0xf5d3('0x0')]();$(_0xf5d3('0x1')+_0x13bf0b)[_0xf5d3('0x2')]();}function goStep2(_0x23392d){is_student_or_alumni=_0x23392d;step(0x2);}function goStep3(){$(_0xf5d3('0x3'))[_0xf5d3('0x4')](is_student_or_alumni);$(_0xf5d3('0x5'))[_0xf5d3('0x4')]($(_0xf5d3('0x6'))[_0xf5d3('0x4')]());$(_0xf5d3('0x7'))[_0xf5d3('0x4')]($(_0xf5d3('0x8'))['val']());$(_0xf5d3('0x9'))[_0xf5d3('0x4')]($(_0xf5d3('0xa'))[_0xf5d3('0x4')]());$(_0xf5d3('0xb'))[_0xf5d3('0x4')]($('#state_field')[_0xf5d3('0x4')]());$(_0xf5d3('0xc'))[_0xf5d3('0x4')]($(_0xf5d3('0xd'))[_0xf5d3('0x4')]());$('#post_code')[_0xf5d3('0x4')]($('#post_code_field')['val']());$(_0xf5d3('0xe'))[_0xf5d3('0x4')]($(_0xf5d3('0xf'))['val']());$('#school_name')[_0xf5d3('0x4')]($(_0xf5d3('0x10'))[_0xf5d3('0x4')]());step(0x3);}$(document)[_0xf5d3('0x11')](function(){$('#search-box')[_0xf5d3('0x12')](function(){query=$(this)[_0xf5d3('0x4')]();console[_0xf5d3('0x13')](query);if(set_text==query){set_text='';return;}if(query!=''){$[_0xf5d3('0x14')]({'type':'GET','url':'http://108.161.151.117:5000/search','data':{'name':query},'crossDomain':!![],'beforeSend':function(){$(_0xf5d3('0x15'))[_0xf5d3('0x16')](_0xf5d3('0x17'),_0xf5d3('0x18'));},'success':function(_0x4a26a7){console[_0xf5d3('0x13')](_0xf5d3('0x19'),query);_0x4a26a7=JSON[_0xf5d3('0x1a')](_0x4a26a7);console['log']('data',_0x4a26a7[0x0]);if(_0x4a26a7[_0xf5d3('0x1b')]>0x0){res=_0xf5d3('0x1c');for(i in _0x4a26a7){res=res+_0xf5d3('0x1d')+_0x4a26a7[i][_0xf5d3('0x1e')]+_0xf5d3('0x1f')+_0x4a26a7[i]['name']+_0xf5d3('0x20');if(i>0x14)break;}res=res+_0xf5d3('0x21');}$('#suggesstion-box')[_0xf5d3('0x22')](res);$('#suggesstion-box')[_0xf5d3('0x2')]();$(_0xf5d3('0x15'))[_0xf5d3('0x16')]('background',_0xf5d3('0x23'));}});}else{$(_0xf5d3('0x24'))[_0xf5d3('0x22')]('');$('#search-box')[_0xf5d3('0x16')](_0xf5d3('0x17'),'#FFF');}});});function selectSchool(_0x2cf702){console[_0xf5d3('0x13')](_0xf5d3('0x25'),_0x2cf702);set_text=_0x2cf702;$(_0xf5d3('0x15'))[_0xf5d3('0x4')](_0x2cf702);$(_0xf5d3('0x24'))[_0xf5d3('0x0')]();}</script>
+var is_student_or_alumni = 0;
+var set_text = "";
+function step(stepid){
+  $('.step').hide();
+  $('#step'+stepid).show();
+}
+
+
+
+$('#form_step_2').submit(function(event){
+  event.preventDefault();
+  event.stopPropagation();
+
+  $('#is_student_or_alumni').val(is_student_or_alumni);
+  school_name = $('#school_name_field').val();
+  if (is_student_or_alumni){
+    if (school_name == '') {
+      return;
+    }
+  }
+
+  $('#school_name').val($('#school_name_field').val());
+  $('#address1').val($('#address1_field').val());
+  $('#address2').val($('#address2_field').val());
+  $('#city').val($('#city_field').val());
+  $('#state').val($('#state_field').val());
+  $('#country').val($('#country_field').val());
+  $('#post_code').val($('#post_code_field').val());
+  $('#mobile_number').val($('#mobile_number_field').val());
+  step(3);
+});
+
+function goStep2(res){
+  is_student_or_alumni = res;
+  console.log('is_student_or_alumni', is_student_or_alumni);
+  if (!is_student_or_alumni) {
+    $('#search-box').attr('disabled', true);
+  } else {
+    $('#search-box').attr('required', true);
+  }
+  step(2);
+}
+
+function goStep3(){
+  $('#is_student_or_alumni').val(is_student_or_alumni);
+  school_name = $('#school_name_field').val();
+  if (is_student_or_alumni){
+    if (school_name == '') {
+      return;
+    }
+  }
+
+  $('#school_name').val($('#school_name_field').val());
+  $('#address1').val($('#address1_field').val());
+  $('#address2').val($('#address2_field').val());
+  $('#city').val($('#city_field').val());
+  $('#state').val($('#state_field').val());
+  $('#country').val($('#country_field').val());
+  $('#post_code').val($('#post_code_field').val());
+  $('#mobile_number').val($('#mobile_number_field').val());
+  step(3);
+}
+
+function RefreshCites(division_id){
+  country_id = $('#countries').val();
+  data = {
+    country_id:country_id,
+    division_id: division_id
+  };
+  $.post('/getCites', data, function(res, status){
+    res.sort(function(a,b){
+      if(a.name < b.name) return -1;
+      if(a.name > b.name) return 1;
+      return 0;
+    });
+    console.log(res);
+    html = '';
+    for (i in res){
+      html = html + '<option value="' + res[i].code + '">' + res[i].name + '</option>';
+    }
+    $('#cites').html(html);
+  });
+}
+
+function RefreshStates(country_id){
+  data = {
+    country_id: country_id
+  };
+  $.post('/getStates', data, function(res, status){
+    res.sort(function(a,b){
+      if(a.name < b.name) return -1;
+      if(a.name > b.name) return 1;
+      return 0;
+    });
+    console.log(res);
+    html = '';
+    data = {};
+    if (res.length > 0){
+      for (i in res){
+        html = html + '<option value="' + res[i].id + '">' + res[i].name + '</option>';
+      }
+      data.division_id = res[0].code;
+      data.country_id = country_id;
+    } else {
+      html = html + '<option value="">' + "No Any States" + '</option>';
+      data.country_id = country_id
+    }
+
+    $('#states').html(html);
+    $.post('/getCites', data, function(res, status){
+      res.sort(function(a,b){
+        if(a.name < b.name) return -1;
+        if(a.name > b.name) return 1;
+        return 0;
+      });
+      console.log(res);
+      html = '';
+      for (i in res){
+        html = html + '<option value="' + res[i].code + '">' + res[i].name + '</option>';
+      }
+      $('#cites').html(html);
+    });
+  });
+}
+
+function selectState(val){
+  RefreshCites(val);
+}
+
+$(document).ready(function(){
+  data = {};
+  $.post('/getCountries', data, function(res, status){
+    res.sort(function(a,b){
+      if(a.name < b.name) return -1;
+      if(a.name > b.name) return 1;
+      return 0;
+    });
+    console.log(res);
+    html = '';
+    for (i in res){
+      html = html + '<option value="' + res[i].code + '">' + res[i].name + '</option>';
+    }
+    $('#countries').html(html);
+    country_code = $('#countries').val();
+    RefreshStates(country_code);
+  });
+	$("#search-box").keyup(function(){
+  query = $(this).val();
+  console.log(query);
+  if (set_text == query) {
+    set_text = "";
+    return;
+  }
+  if (query != ""){
+  $.ajax({
+  type: "GET",
+  url: "http://108.161.151.117:5000/search",
+  data:{name: query},
+  crossDomain: true,
+  beforeSend: function(){
+    $("#search-box").css("background","#FFF url(LoaderIcon.gif) no-repeat 410px");
+  },
+  success: function(data){
+    console.log('query', query);
+    data = JSON.parse(data);
+    console.log('data', data[0]);
+    if (data.length > 0){
+      res = '<ul id="country-list">';
+      for (i in data){
+        res = res + '<li onClick="selectSchool(\'' + data[i].name +'\')">'+ data[i].name + '</li>';
+        if (i > 20) break;
+      }
+      res = res + '</ul>';
+    }
+    $("#suggesstion-box").html(res);
+    $("#suggesstion-box").show();
+    $("#search-box").css("background","#FFF");
+  }
+  });
+} else {
+  $("#suggesstion-box").html("");
+  $("#search-box").css("background","#FFF");
+}
+
+});
+});
+
+
+function selectCountry(val) {
+  RefreshStates(val);
+}
+
+function selectSchool(val) {
+  console.log('click', val);
+  set_text = val;
+  $("#search-box").val(val);
+  $("#suggesstion-box").hide();
+}
+
+function retry(val){
+  if (val == 1){
+    location.href = '/register';
+  } else {
+    location.href = '/home';
+  }
+}
+</script>
 @endsection

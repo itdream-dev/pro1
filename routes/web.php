@@ -20,8 +20,10 @@ Route::get('locale/{lang}', ['as'=>'lang.switch', 'uses'=>'LangController@switch
 
 Route::get('/', 'HomeController@index')->name('index');
 Route::get('/login_help', 'LoginHelpController@login_help')->name('login_help');
-
 Route::post('/readschool', 'SchoolController@schools')->name('schools');
+Route::post('/getCountries', 'Auth\RegisterController@getCountries')->name('countries');
+Route::post('/getStates', 'Auth\RegisterController@getStates')->name('states');
+Route::post('/getCites', 'Auth\RegisterController@getCites')->name('cites');
 
 Route::group(['middleware' => ['auth']], function () {
   Route::get('/dashboard', 'HomeController@home')->name('home');
@@ -30,6 +32,5 @@ Route::group(['middleware' => ['auth']], function () {
   Route::get('/security_center', 'SecurityController@security_center')->name('security_center');
   Route::get('/settings', 'SettingController@settings')->name('settings');
   Route::get('/faq', 'HelpController@faq')->name('faq');
-
   Route::post('/postSend', 'WalletController@postSend')->name('postSend');
 });
