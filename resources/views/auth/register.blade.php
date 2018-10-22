@@ -342,22 +342,14 @@ function goStep3(){
   step(3);
 }
 
-function RefreshCites(division_id){
-  country_id = $('#countries').val();
+function RefreshCites(state_id){
   data = {
-    country_id:country_id,
-    division_id: division_id
+    state_id: state_id
   };
   $.post('/getCites', data, function(res, status){
-    res.sort(function(a,b){
-      if(a.name < b.name) return -1;
-      if(a.name > b.name) return 1;
-      return 0;
-    });
-    console.log(res);
     html = '';
     for (i in res){
-      html = html + '<option value="' + res[i].code + '">' + res[i].name + '</option>';
+      html = html + '<option value="' + res[i].id + '">' + res[i].name + '</option>';
     }
     $('#cites').html(html);
   });
@@ -368,39 +360,24 @@ function RefreshStates(country_id){
     country_id: country_id
   };
   $.post('/getStates', data, function(res, status){
-    res.sort(function(a,b){
-      if(a.name < b.name) return -1;
-      if(a.name > b.name) return 1;
-      return 0;
-    });
-    console.log(res);
+
     html = '';
     data = {};
     if (res.length > 0){
       for (i in res){
         html = html + '<option value="' + res[i].id + '">' + res[i].name + '</option>';
       }
-      data.division_id = res[0].code;
-      data.country_id = country_id;
-    } else {
-      html = html + '<option value="">' + "No Any States" + '</option>';
-      data.country_id = country_id
-    }
-
-    $('#states').html(html);
-    $.post('/getCites', data, function(res, status){
-      res.sort(function(a,b){
-        if(a.name < b.name) return -1;
-        if(a.name > b.name) return 1;
-        return 0;
+      data.state_id = res[0].id;
+      $.post('/getCites', data, function(res, status){
+        console.log(res);
+        html = '';
+        for (i in res){
+          html = html + '<option value="' + res[i].id + '">' + res[i].name + '</option>';
+        }
+        $('#cites').html(html);
       });
-      console.log(res);
-      html = '';
-      for (i in res){
-        html = html + '<option value="' + res[i].code + '">' + res[i].name + '</option>';
-      }
-      $('#cites').html(html);
-    });
+    }
+    $('#states').html(html);
   });
 }
 
@@ -411,20 +388,16 @@ function selectState(val){
 $(document).ready(function(){
   data = {};
   $.post('/getCountries', data, function(res, status){
-    res.sort(function(a,b){
-      if(a.name < b.name) return -1;
-      if(a.name > b.name) return 1;
-      return 0;
-    });
     console.log(res);
     html = '';
     for (i in res){
-      html = html + '<option value="' + res[i].code + '">' + res[i].name + '</option>';
+      html = html + '<option value="' + res[i].id + '">' + res[i].name + '</option>';
     }
     $('#countries').html(html);
-    country_code = $('#countries').val();
-    RefreshStates(country_code);
+    country_id = $('#countries').val();
+    RefreshStates(country_id);
   });
+
 	$("#search-box").keyup(function(){
   query = $(this).val();
   console.log(query);

@@ -32,6 +32,7 @@ class World
           ['country_id', $country_id]
       ])->get();
     }
+
     public static function getContinentByCode($code)
     {
         return Continent::getByCode($code);

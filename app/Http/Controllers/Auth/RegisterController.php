@@ -10,7 +10,9 @@ use App\Wallet;
 use Auth;
 use App\Http\Controllers\Rpc\jsonRPCClient;
 use Log;
-use Khsing\World\World;
+use App\Country;
+use App\State;
+use App\City;
 
 use Illuminate\Http\Request;
 function compareByName($a, $b) {
@@ -112,30 +114,22 @@ class RegisterController extends Controller
 
     public function getCountries(Request $request)
     {
-      $countries = World::Countries();
+      $countries = Country::all();
       return $countries;
     }
 
     public function getStates(Request $request)
     {
-      $country_code = $request->input('country_id');
-      $country = World::getCountryByCode($country_code);
-      $provinces = $country->divisions()->get();
-      return $provinces;
+      $country_id = $request->input('country_id');
+      $states = State::where('country_id', $country_id)->get();
+
+      return $states;
     }
 
     public function getCites(Request $request)
     {
-      $country_code = $request->input('country_id');
-      $country_code = $request->input('country_id');
-      $country = World::getCountryByCode($country_code);
-      $division_id = $request->input('division_id');
-      $cities = [];
-      if (isset($division_id)){
-        $cities = World::getCitiesByDivision($division_id);
-      } else {
-        $cities = World::getCitiesByCountry($country->id);
-      }
+      $state_id = $request->input('state_id');
+      $cities = City::where('state_id', $state_id)->get();
       return $cities;
     }
 }
