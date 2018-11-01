@@ -400,11 +400,11 @@ $(document).ready(function(){
 
 	$("#search-box").keyup(function(){
   query = $(this).val();
-  console.log(query);
-  if (set_text == query) {
-    set_text = "";
-    return;
-  }
+  // console.log(query);
+  // if (set_text == query) {
+  //   set_text = "";
+  //   return;
+  // }
   if (query != ""){
   $.ajax({
   type: "GET",
@@ -415,20 +415,25 @@ $(document).ready(function(){
     $("#search-box").css("background","#FFF url(LoaderIcon.gif) no-repeat 410px");
   },
   success: function(data){
-    console.log('query', query);
     data = JSON.parse(data);
     console.log('data', data[0]);
-    if (data.length > 0){
-      res = '<ul id="country-list">';
-      for (i in data){
-        res = res + '<li onClick="selectSchool(\'' + data[i].name +'\')">'+ data[i].name + '</li>';
-        if (i > 20) break;
+    current_str = $("#search-box").val();
+    if (current_str != ''){
+      if (data.length > 0){
+        res = '<ul id="country-list">';
+        for (i in data){
+          res = res + '<li onClick="selectSchool(\'' + data[i].name +'\')">'+ data[i].name + '</li>';
+          if (i > 20) break;
+        }
+        res = res + '</ul>';
       }
-      res = res + '</ul>';
+      $("#suggesstion-box").html(res);
+      $("#suggesstion-box").show();
+      $("#search-box").css("background","#FFF");
+    } else {
+      $("#suggesstion-box").html('');
+      $("#suggesstion-box").hide();
     }
-    $("#suggesstion-box").html(res);
-    $("#suggesstion-box").show();
-    $("#search-box").css("background","#FFF");
   }
   });
 } else {
